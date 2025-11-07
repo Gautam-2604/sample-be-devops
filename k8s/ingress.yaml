@@ -4,8 +4,8 @@ metadata:
   name: sample-be-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx
   rules:
   - host: sample-be.local
     http:
