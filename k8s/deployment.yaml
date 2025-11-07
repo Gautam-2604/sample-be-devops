@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-be-app
+  labels:
+    app: sample-be-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-be-app
+  template:
+    metadata:
+      labels:
+        app: sample-be-app
+    spec:
+      containers:
+      - name: sample-be-app
+        image: gautam2604/sample-be-devops:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /api/random-fact
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/random-fact
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
